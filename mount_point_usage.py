@@ -3,6 +3,7 @@ import sys
 import os
 
 nfsserver="10.53.187.250"
+usage_threshold=30
 ##Get a list of the namespaces. 
 ##subprocess.check_output is returing bytes , so we conver bytes to string with decode and string to list with split
 list_of_namespaces = subprocess.check_output("kubectl get ns --no-headers -o jsonpath='{.items[*].metadata.name}'",shell=True).decode(sys.stdout.encoding).split(" ")
@@ -19,11 +20,12 @@ for current_namespace in list_of_namespaces:
  if len(list_of_pods_per_namespace) > 0 and len(list_of_pods_per_namespace[0]) >0 :
   for pod in list_of_pods_per_namespace:
    returned_code = os.system("kubectl -n {0} exec -it {1} -- mount 2>/dev/null|grep {2}".format(current_namespace,pod,nfsserver))
-   print(current_namespace,pod)
+   #debug#print(current_namespace,pod)
    if returned_code == 0:
     command_mount = 'kubectl -n {0} exec -it {1} -- mount 2>/dev/null|grep {2}'
     mounts_per_pod = subprocess.check_output(command_mount.format(current_namespace,pod,nfsserver),shell=True).decode(sys.stdout.encoding).split(" ")
 
     command_df = 'kubectl -n {0} exec -it {1} -- df -hP {2}'
     df_usage= subprocess.check_output(command_df.format(current_namespace,pod,mounts_per_pod[2]),shell=True).decode(sys.stdout.encoding).split(" ")
-    print(df_usage[-2])
+    if int(df_usage[-2].replace("%", "")) >= usage_threshold:
+     print("You need to check usge for mount point ", df_usage[-1]," .The usage is ", df_usage[-2],"The pod is ",pod," and the namespace is ",current_namespace)
