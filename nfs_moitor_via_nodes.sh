@@ -1,3 +1,5 @@
+#Author: Thanassis Zakopoulos
+#Usage: This script calculates the NFS mounts of the nodes of a k8s cluster and alerts if disk or inode usage is above a given threshold
 #!/bin/bash
 NFS_SERVER="10.53.187.250"
 USAGE_THRESHOLD=60

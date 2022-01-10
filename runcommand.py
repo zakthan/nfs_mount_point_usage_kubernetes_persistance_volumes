@@ -19,7 +19,21 @@ def runcommand (cmd):
     std_out, std_err = proc.communicate()
     return proc.returncode, std_out, std_err
 
+def output_command(cmd,exit_program="False",print_error="True"):
+    code, stdout, err = runcommand(cmd)
+    if print_error=="True" and code!=0:
+      print("-----------------------------------------------------------------")
+      print(f"For the command: {cmd} \nThe error is : {err}")
+      print("-----------------------------------------------------------------")
+    if exit_program == "True" and code!=0:
+      exit()
+      ##Convert str output to list
+    return stdout.split(" ")
+
 def main():
+    command="ls -la"
+    list = output_command(command)
+    print(list)
     print("==================================================");
     print('Running "ls -lh"...');
     print("==================================================");
