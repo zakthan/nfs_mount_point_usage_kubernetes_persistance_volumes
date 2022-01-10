@@ -21,11 +21,11 @@ do
     NFS_EXPORT_INODES=$(echo $INODES_MOUNTPOINT|awk '{print $1}')
     if (( $USAGE > $USAGE_THRESHOLD ))
     then
-	echo DISK USAGE  : Check $NODE for NFS export $NFS_EXPORT disk usage that is bigger than $USAGE_THRESHOLD%
+	echo DISK USAGE  : Check $NODE for NFS export $NFS_EXPORT disk usage  $USAGE%  that is bigger than $USAGE_THRESHOLD%
     fi
     if (( $INODES_USAGE > $USAGE_THRESHOLD ))
     then
-	echo INODES USAGE: Check $NODE for NFS export $NFS_EXPORT_INODES inodes usage that is bigger than $USAGE_THRESHOLD%
+	echo INODES USAGE: Check $NODE for NFS export $NFS_EXPORT_INODES inodes usage $INODES_USAGE% that is bigger than $USAGE_THRESHOLD%
     fi
   done
 
