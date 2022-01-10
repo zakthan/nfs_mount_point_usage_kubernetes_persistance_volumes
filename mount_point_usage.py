@@ -41,19 +41,23 @@ for current_namespace in list_of_namespaces:
     exit()
   list_of_pvcs_per_namespace = stdout4.split(" ")
   ##If the namespace has at least one pod and there is at least one pvc at the namespace
-  print(current_namespace,list_of_pods_per_namespace,list_of_pvcs_per_namespace)
+  ##debug##print(current_namespace,list_of_pods_per_namespace,list_of_pvcs_per_namespace)
   if len(list_of_pods_per_namespace) > 0 and len(list_of_pods_per_namespace[0]) >0 and len(list_of_pvcs_per_namespace) >0 and len(list_of_pods_per_namespace[0]) >0 :
+   ##For every pod inside the namespace get the nfs mounts
    for pod in list_of_pods_per_namespace:
      list_mounts_command = "kubectl -n %s exec -it %s -- mount 2>/dev/null|grep %s"%(current_namespace, pod, nfsserver)
      code3, stdout3, err3 = runcommand(list_mounts_command)
-     print(stdout3)
      if code3 == 0:
-      command_mount = 'kubectl -n {0} exec -it {1} -- mount 2>/dev/null|grep {2}'
-      mounts_per_pod = subprocess.check_output(command_mount.format(current_namespace,pod,nfsserver),shell=True).decode(sys.stdout.encoding).split(" ")
-    
-      substring = "var/lib/kubelet/pods"
-      if not substring in mounts_per_pod[2]:
-       command_df = 'kubectl -n {0} exec -it {1} -- df -hP {2}'
-       df_usage= subprocess.check_output(command_df.format(current_namespace,pod,mounts_per_pod[2]),shell=True).decode(sys.stdout.encoding).split(" ")
-       if int(df_usage[-2].replace("%", "")) >= usage_threshold:
-        print("You need to check usage for mount point ", df_usage[-1]," .The usage is ", df_usage[-2],"The pod is ",pod," and the namespace is ",current_namespace)
+       mounts_per_pod = stdout3.split(" ")
+       substring = "var/lib/kubelet/pods"
+       if not substring in mounts_per_pod[2]:
+         df_command = 'kubectl -n {0} exec -it {1} -- df -hP {2}'.format(current_namespace,pod,mounts_per_pod[2])
+         code5, stdout5, err5 = runcommand(df_command)
+         if code5!=0:
+           print("-----------------------------------------------------------------")
+           print(f"For the command: {get_po_per_namespace_command} \nThe error is : {err5}")
+           print("-----------------------------------------------------------------")
+           exit()
+         df_usage= stdout5.split(" ")
+         if int(df_usage[-2].replace("%", "")) >= usage_threshold:
+           print("You need to check usage for mount point ", df_usage[-1],"Usage is ", df_usage[-2],"The pod is ",pod," and the namespace is ",current_namespace)
