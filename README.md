@@ -8,4 +8,3 @@ To do:
 
 - For Python script to work we need namespaces to have at least one running pod
 - What happens if pod has 2 mounts
-- Check if there are NFS mounts other than the NFS server variable
