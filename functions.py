@@ -11,13 +11,16 @@
 import subprocess
 
 def runcommand (cmd):
-    proc = subprocess.Popen(cmd,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE,
-                            shell=True,
-                            universal_newlines=True)
-    std_out, std_err = proc.communicate()
-    return proc.returncode, std_out, std_err
+    try:
+      proc = subprocess.Popen(cmd,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE,
+                              shell=True,
+                              universal_newlines=True)
+      std_out, std_err = proc.communicate()
+      return proc.returncode, std_out, std_err
+    except:
+      print("Something went wrong while trying to execute command:",cmd) 
 
 def output_command(cmd,exit_program="False",print_error="True"):
     code, stdout, err = runcommand(cmd)
@@ -29,6 +32,7 @@ def output_command(cmd,exit_program="False",print_error="True"):
       exit()
       ##Convert str output to list
     return stdout.split(" ")
+
 
 def main():
     command="ls -la"

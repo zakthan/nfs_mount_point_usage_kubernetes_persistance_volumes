@@ -1,20 +1,26 @@
 #Author: Thanassis Zakopoulos
 #Usage: This script calculates the NFS mounts of the nodes of a k8s cluster and alerts if disk or inode usage is above a given threshold
 #!/bin/bash
+
+
+#The IP of the NFS Server
 NFS_SERVER="10.53.187.250"
+
+#The threshold 
 USAGE_THRESHOLD=60
+
+#Get all the nodes of the k8s cluster
 NODES=$(kubectl get nodes --no-headers|awk '{print $1}')
+
+#For every node of the cluster find the NFS mount points
 for NODE in  $NODES
 do 
   MOUNTS=$(ssh $NODE "mount|grep $NFS_SERVER" |awk '{print $1" " $3}')
   MOUNT_POINTS=$(echo $MOUNTS|awk '{print $2}')
   for MOUNT_POINT in $MOUNT_POINTS
   do 
-    ##echo $NODE
     DF_MOUNTPOINT=$(ssh $NODE "df -hP $MOUNT_POINT|grep -v Filesystem")
-    ##echo DF_MOUNTPOINT is $DF_MOUNTPOINT
     INODES_MOUNTPOINT=$(ssh $NODE "df -ihP $MOUNT_POINT|grep -v Filesystem")
-    ##echo INODES_MOUNTPOINT is $INODES_MOUNTPOINT
     USAGE=$(echo $DF_MOUNTPOINT|awk '{print $5}'|tr "%" " ")
     INODES_USAGE=$(echo $INODES_MOUNTPOINT|awk '{print $5}'|tr "%" " ")
     NFS_EXPORT=$(echo $DF_MOUNTPOINT|awk '{print $1}')
