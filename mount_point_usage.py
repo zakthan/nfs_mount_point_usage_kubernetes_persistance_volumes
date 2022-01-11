@@ -1,8 +1,20 @@
+import argparse
 from functions import runcommand
 from functions import output_command
 
 nfsserver="10.53.187.250"
-usage_threshold=50
+# Create the parser
+parser = argparse.ArgumentParser()
+# Add an argument
+parser.add_argument('--threshold', type=int, required=True)
+# Parse the argument
+args = parser.parse_args()
+# Print "Hello" + the user input argument
+print('Hello,', args.threshold)
+usage_threshold  = args.threshold
+print(usage_threshold)
+##usage_threshold = int(input("Enter a threshold percentage: "))
+##usage_threshold=50
 ##Get a list of the namespaces. 
 get_namespaces_command="kubectl get ns --no-headers -o jsonpath='{.items[*].metadata.name}'"
 list_of_namespaces = output_command(get_namespaces_command)
@@ -31,6 +43,7 @@ for current_namespace in list_of_namespaces:
      ##debug##print(mounts_per_pod) 
      if (len(mounts_per_pod) > 0 and len(mounts_per_pod[0]) > 0):
        if not substring in mounts_per_pod[2] :
+          print("NFS export for the pod is:",mounts_per_pod[0],mounts_per_pod[2])
           df_command = 'kubectl -n {0} exec -it {1} -- df -hP {2}'.format(current_namespace,pod,mounts_per_pod[2])
           df_command_inodes = 'kubectl -n {0} exec -it {1} -- df -hPi {2}'.format(current_namespace,pod,mounts_per_pod[2])
           df_usage= output_command(df_command)
@@ -41,5 +54,5 @@ for current_namespace in list_of_namespaces:
             print("----------------------------------------------------------------------------------------------------------------------------------------")
           if int(df_usage_inodes[-2].replace("%", "")) >= usage_threshold:
             print("----------------------------------------------------------------------------------------------------------------------------------------")
-            print("PROBLEM!!You need to check inodes usage for mount point ", df_usage[-1],"Usage is ", df_usage[-2],"The pod is ",pod," and the namespace is ",current_namespace)
+            print("PROBLEM!!You need to check inodes usage for mount point ", df_usage_inodes[-1],"Usage is ", df_usage_inodes[-2],"The pod is ",pod," and the namespace is ",current_namespace)
             print("----------------------------------------------------------------------------------------------------------------------------------------")
