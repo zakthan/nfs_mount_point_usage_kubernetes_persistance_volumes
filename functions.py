@@ -33,8 +33,32 @@ def output_command(cmd,exit_program="False",print_error="True"):
       ##Convert str output to list
     return stdout.split(" ")
 
+def look_for_other_nfs_servers(ip_parameter):
+    cmd="kubectl get pv -o jsonpath='{.items[?(@.status.phase==\"Bound\")].spec.nfs.server}'"
+    ip_list= output_command(cmd)
+    print("---------------------------------------------------------------------------- ")
+    print("Now looking for NFS server other than ",ip_parameter," with PVs in Bound state")
+    auxiliaryList=[]
+    for ip in ip_list:
+      if ip != ip_parameter:
+        if ip not in auxiliaryList:
+          auxiliaryList.append(ip)
+          print(f"Found: {ip}, that is not the given NFS server {ip_parameter}. PLZ CHECK IT!")
+          ip_quotes=f'"{ip}"'
+          expression1="kubectl get pv -o jsonpath='{.items[?(@.spec.nfs.server=="
+          expression2=')].metadata.name}\''
+          cmd2=expression1+ip_quotes+expression2
+          pv_list= output_command(cmd2)
+          print(f"List of PVs in status BOUND for NFS server {ip} is {pv_list}")
+    if len(auxiliaryList)== 0:
+      print("No other NFS servers found.")
+    print("---------------------------------------------------------------------------- ")
+        
+        
+
 
 def main():
+    look_for_other_nfs_servers("10.53.187.250")
     command="ls -la"
     list = output_command(command)
     print(list)

@@ -8,5 +8,4 @@ To do:
 
 - For Python script to work we need namespaces to have at least one running pod
 - What happens if pod has 2 mounts
-- Do the same for inodes for python script
-
+- Check if there are NFS mounts other than the NFS server variable

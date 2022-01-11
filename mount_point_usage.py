@@ -1,9 +1,12 @@
 import argparse
 from functions import runcommand
 from functions import output_command
+from functions import look_for_other_nfs_servers
 
 ##The ip of the NFS server
 nfsserver="10.53.187.250"
+
+
 # Create the parser
 parser = argparse.ArgumentParser()
 
@@ -25,6 +28,9 @@ except:
 print('-----------------------------------------------------------------------')
 print('The value of the threshold for disk space and inodes is', str(usage_threshold) + "% of the usage")
 print('-----------------------------------------------------------------------')
+
+#Check for NFS servers other than the nfs server given
+look_for_other_nfs_servers(nfsserver)
 
 ##Get a list of the namespaces. 
 get_namespaces_command="kubectl get ns --no-headers -o jsonpath='{.items[*].metadata.name}'"
