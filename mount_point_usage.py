@@ -1,5 +1,5 @@
-from runcommand import runcommand
-from runcommand import output_command
+from functions import runcommand
+from functions import output_command
 
 nfsserver="10.53.187.250"
 usage_threshold=50
@@ -32,8 +32,14 @@ for current_namespace in list_of_namespaces:
      if (len(mounts_per_pod) > 0 and len(mounts_per_pod[0]) > 0):
        if not substring in mounts_per_pod[2] :
           df_command = 'kubectl -n {0} exec -it {1} -- df -hP {2}'.format(current_namespace,pod,mounts_per_pod[2])
+          df_command_inodes = 'kubectl -n {0} exec -it {1} -- df -hPi {2}'.format(current_namespace,pod,mounts_per_pod[2])
           df_usage= output_command(df_command)
+          df_usage_inodes= output_command(df_command_inodes)
           if int(df_usage[-2].replace("%", "")) >= usage_threshold:
             print("----------------------------------------------------------------------------------------------------------------------------------------")
             print("PROBLEM!!You need to check usage for mount point ", df_usage[-1],"Usage is ", df_usage[-2],"The pod is ",pod," and the namespace is ",current_namespace)
+            print("----------------------------------------------------------------------------------------------------------------------------------------")
+          if int(df_usage_inodes[-2].replace("%", "")) >= usage_threshold:
+            print("----------------------------------------------------------------------------------------------------------------------------------------")
+            print("PROBLEM!!You need to check inodes usage for mount point ", df_usage[-1],"Usage is ", df_usage[-2],"The pod is ",pod," and the namespace is ",current_namespace)
             print("----------------------------------------------------------------------------------------------------------------------------------------")
