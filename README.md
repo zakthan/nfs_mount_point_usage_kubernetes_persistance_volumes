@@ -14,7 +14,10 @@ Run "./nfs_moitor_via_nodes.sh" for shell script"
 - Usage: python3 mount_point_usage.py --threshold <INT> --nfsserver <STR> (if no argument is given default value is threshold=90 and nfsserver=10.53.187.250
 
 - This script id doing the following:
-  1. Checks for bounded PVs 
+  1. Checks for bounded PVs with IP other than the given NFS server. If any found , for each different IP, it prints the IP of the other NFS servers and these bounded PVs
+  2. It parses all the namespaces of the k8s cluster
+  3. For each namespace it checks for running pods and PVCs
+  4. If it finds at least one pod and at least one PVC
 
 ## To do:
 
