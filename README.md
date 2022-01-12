@@ -18,9 +18,18 @@ Run "./nfs_moitor_via_nodes.sh" for shell script"
   2. It parses all the namespaces of the k8s cluster.
   3. For each namespace it checks for running pods and PVCs.
   4. If it finds at least one pod and at least one PVC:
-     - It check the mounts of each pod for the IP of the NFS server
-       - If NFS mount is found it checks for the disk free of the exported folder and compares this value with the given threshold
-       - If disk or inodes usage is more than the given threshold it prints info for this export and the pod 
+     - It check the mounts of each pod for the IP of the NFS server.
+       - If NFS mount is found it checks for the disk free of the exported folder and compares this value with the given threshold.
+       - If disk or inodes usage is more than the given threshold it prints info for this export and the pod.
+
+## Bash Script
+
+- Usage: ./nfs_moitor_via_nodes.sh
+
+- If a pod uses NFS mounts , kubernetes is mounting the NFS export at the node running this pod.
+  Therefore this script:
+  1. Parses the kuberentes cluster for all it's nodes
+
 
 ## To do:
 
