@@ -1,4 +1,3 @@
-# runcommand.py
 # Handy function that executes an external command in the shell
 # and returns 3 values: exit code of the command, its standard output
 # and its error output.
