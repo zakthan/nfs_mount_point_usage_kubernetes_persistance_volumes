@@ -5,6 +5,8 @@ This repository contains a python and a bash script.
 
 Both scripts need a bastion host to run that has ssh connectivity using ssh keys to the nodes of the cluster
 
+Set the current context for the k8s cluster you wish to monitor before running the scripts
+
 Run "python3 mount_point_usage.py" for python script
 
 Run "./nfs_monitor_via_nodes.sh" for shell script"
