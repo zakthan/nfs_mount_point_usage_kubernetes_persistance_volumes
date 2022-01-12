@@ -4,7 +4,7 @@
 
 
 #The IP of the NFS Server
-NFS_SERVER="10.53.187.250"
+NFS_SERVER="1.2.3.4"
 
 #The threshold 
 USAGE_THRESHOLD=60

@@ -58,7 +58,7 @@ def look_for_other_nfs_servers(ip_parameter):
 
 
 def main():
-    look_for_other_nfs_servers("10.53.187.250")
+    look_for_other_nfs_servers("1.2.3.4")
     command="ls -la"
     list = output_command(command)
     print(list)

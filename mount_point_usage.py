@@ -3,7 +3,7 @@ from functions import runcommand
 from functions import output_command
 from functions import look_for_other_nfs_servers
 
-#nfsserver="10.53.187.250"
+#nfsserver="1.2.3.4"
 
 
 # Create the parser
@@ -22,12 +22,12 @@ try:
   nfsserver  = args.nfsserver
 except:
   print('---------------------------------------------------------------------------------------------------------------------------------------')
-  print("This script needs an int --threshold arg and a str --nfsserver arg.  Putting default value for threshold=90 and nfsserver=10.53.187.250")
+  print("This script needs an int --threshold arg and a str --nfsserver arg.  Putting default value for threshold=90 and nfsserver=1.2.3.4")
   print('---------------------------------------------------------------------------------------------------------------------------------------')
   ##The usage threshold if none is given as an argument
   usage_threshold  = 90
   ##The ip of the NFS server if none is given as an argument
-  nfsserver="10.53.187.250"
+  nfsserver="1.2.3.4"
 
 #Print the value of the variable
 print('-----------------------------------------------------------------------')
