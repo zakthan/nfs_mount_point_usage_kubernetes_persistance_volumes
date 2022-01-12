@@ -3,8 +3,7 @@ from functions import runcommand
 from functions import output_command
 from functions import look_for_other_nfs_servers
 
-##The ip of the NFS server
-nfsserver="10.53.187.250"
+#nfsserver="10.53.187.250"
 
 
 # Create the parser
@@ -12,21 +11,28 @@ parser = argparse.ArgumentParser()
 
 # Add an argument
 parser.add_argument('--threshold', type=int, required=True)
+parser.add_argument('--nfsserver', type=str, required=True)
 
 # Parse the argument. If argument is empty or not good put default argument 
 try:
   args = parser.parse_args()
-  # Print "Hello" + the user input argument
+  ##The usage threshold if none is given as an argument
   usage_threshold  = args.threshold
+  ##The ip of the NFS server
+  nfsserver  = args.nfsserver
 except:
-  print('-----------------------------------------------------------------------')
-  print("*****This script needs an int --threshold arg.  Putting default value for threshold=90*****")
-  print('-----------------------------------------------------------------------')
+  print('---------------------------------------------------------------------------------------------------------------------------------------')
+  print("This script needs an int --threshold arg and a str --nfsserver arg.  Putting default value for threshold=90 and nfsserver=10.53.187.250")
+  print('---------------------------------------------------------------------------------------------------------------------------------------')
+  ##The usage threshold if none is given as an argument
   usage_threshold  = 90
+  ##The ip of the NFS server if none is given as an argument
+  nfsserver="10.53.187.250"
 
 #Print the value of the variable
 print('-----------------------------------------------------------------------')
 print('The value of the threshold for disk space and inodes is', str(usage_threshold) + "% of the usage")
+print('The value of the NFS server is ', nfsserver)
 print('-----------------------------------------------------------------------')
 
 #Check for NFS servers other than the nfs server given
