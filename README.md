@@ -39,5 +39,5 @@ Run "./nfs_monitor_via_nodes.sh" for the bash shell script.
 ## To do:
 
 - For Python script to work we need namespaces to have at least one running pod
-- Currently both scripts are just printing info to stdout , but they can easily be refactored to send an alert and/or send values to a db (ie prometheus or zabbix)
+- Currently both scripts are just printing info to stdout , but they can easily be refactored to send an alert and/or send values to a db (eg prometheus or zabbix)
 - What happens if pod has 2 or more NFS mounts
