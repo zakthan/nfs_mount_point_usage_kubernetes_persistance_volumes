@@ -7,7 +7,7 @@ Both scripts need a bastion host to run that has ssh connectivity using ssh keys
 
 Run "python3 mount_point_usage.py" for python script
 
-Run "./nfs_moitor_via_nodes.sh" for shell script"
+Run "./nfs_monitor_via_nodes.sh" for shell script"
 
 ## Python Script
 
@@ -24,14 +24,18 @@ Run "./nfs_moitor_via_nodes.sh" for shell script"
 
 ## Bash Script
 
-- Usage: ./nfs_moitor_via_nodes.sh
+- Usage: ./nfs_monitor_via_nodes.sh
 
 - If a pod uses NFS mounts , kubernetes is mounting the NFS export at the node running this pod.
   Therefore this script:
   1. Parses the kuberentes cluster for all it's nodes
+  2. For each node it checks if there are mounts with the IP of the NFS server
+  3. For each of the mounts found, it checks the disk free usage for both disk and inodes usage and compares value with a threshold
+  4. If the usage is bigger than the threshold value it prints info to the output 
 
 
 ## To do:
 
 - For Python script to work we need namespaces to have at least one running pod
+- Currently both scripts are just printing info to stdout , but they can easily be refactored to send an alert and/or send values to a db (ie prometheus or zabbix)
 - What happens if pod has 2 or more NFS mounts
