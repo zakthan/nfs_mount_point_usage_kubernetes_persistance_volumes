@@ -3,7 +3,7 @@ from functions import runcommand
 from functions import output_command
 from functions import look_for_other_nfs_servers
 
-#nfsserver="1.2.3.4"
+#nfsserver="10.53.187.250"
 
 
 # Create the parser
@@ -21,13 +21,13 @@ try:
   ##The ip of the NFS server
   nfsserver  = args.nfsserver
 except:
-  print('---------------------------------------------------------------------------------------------------------------------------------------')
-  print("This script needs an int --threshold arg and a str --nfsserver arg.  Putting default value for threshold=90 and nfsserver=1.2.3.4")
-  print('---------------------------------------------------------------------------------------------------------------------------------------')
   ##The usage threshold if none is given as an argument
-  usage_threshold  = 90
+  usage_threshold  = 85
   ##The ip of the NFS server if none is given as an argument
-  nfsserver="1.2.3.4"
+  nfsserver="10.53.187.250"
+  print('---------------------------------------------------------------------------------------------------------------------------------------')
+  print(f"This script needs an int --threshold arg and a str --nfsserver arg.  Putting default value for threshold={usage_threshold} and nfsserver={nfsserver}")
+  print('---------------------------------------------------------------------------------------------------------------------------------------')
 
 #Print the value of the variable
 print('-----------------------------------------------------------------------')
@@ -47,7 +47,7 @@ list_of_namespaces = output_command(get_namespaces_command)
 ##For all the namespaces
 for current_namespace in list_of_namespaces:
   ##Get a list of pods per namespace
-  print("Now checking NAMESPACE:",current_namespace)
+  ###debug##print("Now checking NAMESPACE:",current_namespace)
   get_po_per_namespace_command="kubectl -n %s  get po -o jsonpath='{.items[*].metadata.name}'"%current_namespace
   list_of_pods_per_namespace = output_command(get_po_per_namespace_command,"True")
   get_pvc_per_namespace_command="kubectl -n %s  get pvc -o jsonpath='{.items[*].metadata.name}'"%current_namespace
@@ -56,7 +56,7 @@ for current_namespace in list_of_namespaces:
   if (len(list_of_pods_per_namespace) > 0 and len(list_of_pods_per_namespace[0]) >0 and len(list_of_pvcs_per_namespace) >0 and len(list_of_pvcs_per_namespace[0]) >0) :
    ##For every pod inside the namespace get the nfs mounts
    for pod in list_of_pods_per_namespace:
-     print ("Now checking POD:",pod)
+     ##debug#print ("Now checking POD:",pod)
      list_mounts_command = "kubectl -n %s exec -it %s -- mount 2>/dev/null|grep %s"%(current_namespace, pod, nfsserver)
      mounts_per_pod = output_command(list_mounts_command,"False","False")
      substring = "var/lib/kubelet/pods"
@@ -64,7 +64,7 @@ for current_namespace in list_of_namespaces:
      #If there are mounts get the df for these mounts
      if (len(mounts_per_pod) > 0 and len(mounts_per_pod[0]) > 0):
        if not substring in mounts_per_pod[2] :
-          print("NFS export for the pod is:",mounts_per_pod[0],mounts_per_pod[2])
+          ###debug## print("NFS export for the pod is:",mounts_per_pod[0],mounts_per_pod[2])
           df_command = 'kubectl -n {0} exec -it {1} -- df -hP {2}'.format(current_namespace,pod,mounts_per_pod[2])
           df_command_inodes = 'kubectl -n {0} exec -it {1} -- df -hPi {2}'.format(current_namespace,pod,mounts_per_pod[2])
           df_usage= output_command(df_command)
