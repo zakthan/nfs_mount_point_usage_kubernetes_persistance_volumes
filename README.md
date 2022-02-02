@@ -29,6 +29,7 @@ Run "./nfs_monitor_via_nodes.sh" for the bash shell script.
   It sets PATH and k8s context to use
   Ouput is sent to a file and then emailed to a mail list.
   Crontab entry shoul look like this: 
+
   0 9 * * * "SCRIPT PATH"/crontab_script.sh prod >/tmp/prod.log 2>&1
 
 ## Bash Script
