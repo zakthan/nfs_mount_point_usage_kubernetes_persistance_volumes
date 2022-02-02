@@ -3,8 +3,6 @@ from functions import runcommand
 from functions import output_command
 from functions import look_for_other_nfs_servers
 
-#nfsserver="10.53.187.250"
-
 
 # Create the parser
 parser = argparse.ArgumentParser()
