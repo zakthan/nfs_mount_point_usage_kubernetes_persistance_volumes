@@ -2,9 +2,9 @@
 ## This scipt takes one argument. prod or uat
 
 #!/bin/bash
-SCRIPT_PATH=$(pwd)
+SCRIPT_PATH=/root/scripts/scripts/k8sadmin/nfs_mount_point_usage/
 PYTHON_FILE="mount_point_usage.py"
-MAILLIST="azakopoulos@ote.gr"
+MAILLIST="k8sadmins.GRC01@ote.gr"
 
    case $1 in
       uat) 
@@ -24,4 +24,8 @@ MAILLIST="azakopoulos@ote.gr"
 cat /dev/null > LOG
 
 ##run script, put output into a log file and send to recipients
-bash -c "kctx $KCTX&& python3 $SCRIPT_PATH/$PYTHON_FILE > $LOG && mailx -s \"k8s nfs usage $ENV\" $MAILLIST < $LOG"
+##PATH and k8s context needs to be set because of crontab
+echo AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+export PATH="/usr/local/bin:$PATH"
+kubectl config --kubeconfig=/root/.kube/config use-context $KCTX
+python3 $SCRIPT_PATH/$PYTHON_FILE > $LOG && mailx -s "k8s nfs usage $ENV" $MAILLIST < $LOG

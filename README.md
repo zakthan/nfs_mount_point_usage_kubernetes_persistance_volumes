@@ -24,8 +24,10 @@ Run "./nfs_monitor_via_nodes.sh" for the bash shell script.
        - If NFS mount is found it checks for the disk free of the exported folder and compares this value with the given threshold.
        - If disk or inodes usage is more than the given threshold it prints info for this export and the pod.
 
-###
-- If there is kctx set I have prepared a script to add to crontab. Filename is crontab_script.sh. It takes as an argument the enviroment. Ouput is sent to a file and then emailed to a mail list.
+### Crontab for the Python script
+- I have prepared a script to add to crontab. Filename is crontab_script.sh. It takes as an argument the enviroment. 
+  It sets PATH and k8s context to use
+  Ouput is sent to a file and then emailed to a mail list.
 
 ## Bash Script
 
