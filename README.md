@@ -28,6 +28,7 @@ Run "./nfs_monitor_via_nodes.sh" for the bash shell script.
 - I have prepared a script to add to crontab. Filename is crontab_script.sh. It takes as an argument the enviroment. 
   It sets PATH and k8s context to use
   Ouput is sent to a file and then emailed to a mail list.
+  Crontab entry shoul look like this: 0 9 * * * <SCRIPT PATH>/crontab_script.sh prod >/tmp/prod.log 2>&1
 
 ## Bash Script
 
