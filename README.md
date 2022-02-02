@@ -13,7 +13,7 @@ Run "./nfs_monitor_via_nodes.sh" for the bash shell script.
 
 ## Python Script
 
-- Usage: python3 mount_point_usage.py --threshold <INT> --nfsserver <STR> (if no argument is given default value is threshold=90 and nfsserver=1.2.3.4
+- Usage: python3 mount_point_usage.py --threshold <INT> --nfsserver <STR> (if no argument is given default values are set) 
 
 - This script is doing the following:
   1. Checks for bounded PVs with IP other than the given NFS server. If any found , for each different IP, it prints the IP and the bounded PVs of it.

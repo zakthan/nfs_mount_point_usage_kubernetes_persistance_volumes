@@ -25,7 +25,6 @@ cat /dev/null > LOG
 
 ##run script, put output into a log file and send to recipients
 ##PATH and k8s context needs to be set because of crontab
-echo AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 export PATH="/usr/local/bin:$PATH"
 kubectl config --kubeconfig=/root/.kube/config use-context $KCTX
 python3 $SCRIPT_PATH/$PYTHON_FILE > $LOG && mailx -s "k8s nfs usage $ENV" $MAILLIST < $LOG
