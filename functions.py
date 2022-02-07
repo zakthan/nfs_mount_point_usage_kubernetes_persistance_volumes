@@ -53,39 +53,45 @@ def look_for_other_nfs_servers(ip_parameter):
       print("No other NFS servers found.")
     print("---------------------------------------------------------------------------- ")
         
+
+def write_to_a_file(content):
+    f = open("counter.txt", "w")
+    f.write(f"{str(content)}")
+    f.close()
         
 
 
 def main():
-    look_for_other_nfs_servers("1.2.3.4")
-    command="ls -la"
-    list = output_command(command)
-    print(list)
-    print("==================================================");
-    print('Running "ls -lh"...');
-    print("==================================================");
-    code, out, err = runcommand("ls -lh");
-    print("Return code: {}".format(code));
-    print("--------------------------------------------------");
-    print("stdout:");
-    print(out);
-    print("--------------------------------------------------");
-    print("stderr:");
-    print(err);
-    print("--------------------------------------------------");
+    #look_for_other_nfs_servers("1.2.3.4")
+    #command="ls -la"
+    #list = output_command(command)
+    #print(list)
+    #print("==================================================");
+    #print('Running "ls -lh"...');
+    #print("==================================================");
+    #code, out, err = runcommand("ls -lh");
+    #print("Return code: {}".format(code));
+    #print("--------------------------------------------------");
+    #print("stdout:");
+    #print(out);
+    #print("--------------------------------------------------");
+    #print("stderr:");
+    #print(err);
+    #print("--------------------------------------------------");
 
-    print("==================================================");
-    print('Running "ls -lj"...');
-    print("==================================================");
-    code, out, err = runcommand("ls -lj");
-    print("Return code: {}".format(code));
-    print("--------------------------------------------------");
-    print("stdout:");
-    print(out);
-    print("--------------------------------------------------");
-    print("stderr:");
-    print(err);
-    print("--------------------------------------------------");
+    #print("==================================================");
+    #print('Running "ls -lj"...');
+    #print("==================================================");
+    #code, out, err = runcommand("ls -lj");
+    #print("Return code: {}".format(code));
+    #print("--------------------------------------------------");
+    #print("stdout:");
+    #print(out);
+    #print("--------------------------------------------------");
+    #print("stderr:");
+    #print(err);
+    #print("--------------------------------------------------");
+    write_to_a_file(6665)
     
 if __name__ == '__main__':
     main()

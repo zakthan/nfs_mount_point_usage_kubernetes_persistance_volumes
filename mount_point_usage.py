@@ -2,6 +2,7 @@ import argparse
 from functions import runcommand
 from functions import output_command
 from functions import look_for_other_nfs_servers
+from functions import write_to_a_file
 
 
 # Create the parser
@@ -42,6 +43,9 @@ list_of_namespaces = output_command(get_namespaces_command)
 ##debug##print(type(list_of_namespaces))
 ##debug##print(list_of_namespaces)
 
+##counter for values bigger than threshold
+counter = 0
+
 ##For all the namespaces
 for current_namespace in list_of_namespaces:
   ##Get a list of pods per namespace
@@ -73,8 +77,12 @@ for current_namespace in list_of_namespaces:
             print("----------------------------------------------------------------------------------------------------------------------------------------")
             print("PROBLEM!!You need to check usage for mount point ", df_usage[-1],"Usage is ", df_usage[-2],"The pod is ",pod," and the namespace is ",current_namespace)
             print("----------------------------------------------------------------------------------------------------------------------------------------")
+            counter+=1
 
           if int(df_usage_inodes[-2].replace("%", "")) >= usage_threshold:
             print("----------------------------------------------------------------------------------------------------------------------------------------")
             print("PROBLEM!!You need to check inodes usage for mount point ", df_usage_inodes[-1],"Usage is ", df_usage_inodes[-2],"The pod is ",pod," and the namespace is ",current_namespace)
             print("----------------------------------------------------------------------------------------------------------------------------------------")
+
+##write counter value to a file to decide further actions
+write_to_a_file(counter)

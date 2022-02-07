@@ -25,11 +25,14 @@ Run "./nfs_monitor_via_nodes.sh" for the bash shell script.
        - If disk or inodes usage is more than the given threshold it prints info for this export and the pod.
 
 ### Crontab for the Python script
-- I have prepared a script to add to crontab. Filename is crontab_script.sh. It takes as an argument the enviroment. 
+- I have prepared a script to add to crontab. Filename is crontab_script.sh. It takes 3 arguments. 
+  Argument one is the enviroment. Two is the threshold and three is the nfs server. If args 2or 3 are empty default of python script are used  
   It sets PATH and k8s context to use.  
-  Ouput is sent to a file and then emailed to a mail list.  
+  Ouput is sent to a file and then emailed to a mail list  if at least 1 mount point with problem is found  
   Crontab entry shoul look like this:   
-  0 9 * * * "SCRIPT PATH"/crontab_script.sh prod >/tmp/prod.log 2>&1
+  0 9 * * * "SCRIPT PATH"/crontab_script.sh prod 90 1.2.3.4 >/tmp/prod.log 2>&1  
+  Where prod is the env name , 90 is the threshold and 1.2.3.4 is the IP of the NFS server
+  For script to work kctx needs to be set (kubectx) but it can easilly be modified to work with other tools or kubeconfig as well
 
 ## Bash Script
 
@@ -48,3 +51,4 @@ Run "./nfs_monitor_via_nodes.sh" for the bash shell script.
 - For Python script to work we need namespaces to have at least one running pod
 - Currently both scripts are just printing info to stdout , but they can easily be refactored to send an alert and/or send values to a db (eg prometheus or zabbix)
 - What happens if pod has 2 or more NFS mounts
+- kctx set for differnet users (crontab script for python)
