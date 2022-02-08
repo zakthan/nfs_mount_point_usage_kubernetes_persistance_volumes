@@ -1,4 +1,4 @@
-##Athor: Athanasios Zakopoulos
+##Author: Athanasios Zakopoulos
 ## This scipt takes 3 arguments. 
 ##First is prod or uat enviromet
 ##Second is the value of the threshhold (if empty python script has default)
