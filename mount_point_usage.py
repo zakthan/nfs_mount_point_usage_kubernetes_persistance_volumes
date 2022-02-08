@@ -23,7 +23,7 @@ except:
   ##The usage threshold if none is given as an argument
   usage_threshold  = 85
   ##The ip of the NFS server if none is given as an argument
-  nfsserver="10.53.187.250"
+  nfsserver="1.2.3.4"
   print('---------------------------------------------------------------------------------------------------------------------------------------')
   print(f"This script needs an int --threshold arg and a str --nfsserver arg.  Putting default value for threshold={usage_threshold} and nfsserver={nfsserver}")
   print('---------------------------------------------------------------------------------------------------------------------------------------')

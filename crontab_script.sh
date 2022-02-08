@@ -9,19 +9,19 @@
 PYTHON_FILE="mount_point_usage.py"
 FILENAME="crontab_script.sh"
 SCRIPT_PATH=$(echo $0|sed "s/\/$FILENAME//g")
-##MAILLIST="k8sadmins.GRC01@ote.gr"
-MAILLIST="azakopoulos@ote.gr"
+##MAILLIST="a@a.a"
+MAILLIST="a@a.a"
 THRESHOLD="--threshold=$2"
 NFS_SERVER="--nfsserver=$3"
 
    case $1 in
       uat) 
            ENV=UAT
-           KCTX="ucp_tk8smaster01.cosmote.gr:6443_admin"
+           KCTX="ucp_taaaaaaaaaa"
            LOG="$SCRIPT_PATH/mount_point_usage.$ENV.log";; 
       prod) 
            ENV=PROD
-           KCTX="ucp_pk8smaster.cosmote.gr:6443_admin"
+           KCTX="ucp_aaaaaaaaaa"
            LOG="$SCRIPT_PATH/mount_point_usage.$ENV.log" ;;
       *) 
          echo Wrong argument . Accepted values are prod or uat
