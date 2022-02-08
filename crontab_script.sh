@@ -47,7 +47,7 @@ fi
 
 ## If no usage is above threshold do not sent any email
 COUNTER=$(cat counter.txt)
-if [[ $COUNTER -gt 0 ]]
+if [ "$COUNTER" -gt 0 ]
 then
 mailx -s "k8s nfs usage $ENV" $MAILLIST < $LOG
 fi
