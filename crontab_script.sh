@@ -6,8 +6,8 @@
 
 
 #!/bin/bash
-SCRIPT_PATH=$(pwd)
 PYTHON_FILE="mount_point_usage.py"
+SCRIPT_PATH=$(echo $0|sed 's/\$PYTHON_FILE//g')
 ##MAILLIST="k8sadmins.GRC01@ote.gr"
 MAILLIST="azakopoulos@ote.gr"
 THRESHOLD="--threshold=$2"
