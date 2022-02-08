@@ -8,7 +8,7 @@
 #!/bin/bash
 PYTHON_FILE="mount_point_usage.py"
 FILENAME="crontab_script.sh"
-SCRIPT_PATH=$(echo $0|sed 's/\/$FILENAME//g')
+SCRIPT_PATH=$(echo $0|sed "s/\/$FILENAME//g")
 ##MAILLIST="k8sadmins.GRC01@ote.gr"
 MAILLIST="azakopoulos@ote.gr"
 THRESHOLD="--threshold=$2"
